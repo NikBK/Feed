@@ -110,7 +110,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
                         className="flex rounded-md px-3 py-2 bg-[#877eff] text-white whitespace-nowrap"
                         disabled={isLoadingCreate || isLoadingUpdate}
                     >
-                        {isLoadingCreate || isLoadingUpdate && <Loader />}
+                        {(isLoadingCreate || isLoadingUpdate) && <Loader />}
                         {action} Post
                     </button>
                 </div>

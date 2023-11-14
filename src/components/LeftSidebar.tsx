@@ -13,8 +13,8 @@ const LeftSidebar = () => {
 
     const handleSignOut = async () => {
         signOut();
-        await checkAuthUser();
-        navigate('/sign-in');
+        // await checkAuthUser();
+        // navigate('/sign-in');
     }
 
 
