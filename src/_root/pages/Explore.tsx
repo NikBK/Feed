@@ -37,7 +37,7 @@ const Explore = () => {
         <div className='explore-container'>
             <div className='explore-inner_container'>
                 <h2 className='h3-bold md:h2-bold w-full'>Search Posts</h2>
-                <div className='flex gap-1 px-4 w-full rounded-lg bg-dark-4'>
+                <div className='flex gap-1 px-4 w-full rounded-lg bg-dark-4 focus-within:outline focus-within:outline-1 focus-within:outline-light-3'>
                     <img src="/assets/icons/search.svg" alt="search" width={24} height={24} />
                     <input
                         type="text"
