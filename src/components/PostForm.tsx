@@ -5,6 +5,7 @@ import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutati
 import { useUserContext } from "@/context/AuthContext";
 import Toast from "./Toast";
 import { useNavigate } from "react-router-dom";
+import Loader from "./Loader";
 
 type PostFormProps = {
     post?: Models.Document;
@@ -106,10 +107,10 @@ const PostForm = ({ post, action }: PostFormProps) => {
                     </button>
                     <button
                         type="submit"
-                        className="rounded-md px-3 py-2 bg-[#877eff] text-white"
+                        className="flex rounded-md px-3 py-2 bg-[#877eff] text-white whitespace-nowrap"
                         disabled={isLoadingCreate || isLoadingUpdate}
                     >
-                        {isLoadingCreate || isLoadingUpdate && 'Loading...'}
+                        {isLoadingCreate || isLoadingUpdate && <Loader />}
                         {action} Post
                     </button>
                 </div>
