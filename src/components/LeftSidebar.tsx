@@ -2,12 +2,21 @@ import { sidebarLinks } from '@/constants';
 import { useUserContext } from '@/context/AuthContext';
 import { useSignOutAccount } from '@/lib/react-query/queriesAndMutations';
 import { INavLink } from '@/types';
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 
 const LeftSidebar = () => {
-    const { user } = useUserContext();
+    const { user, checkAuthUser } = useUserContext();
     const { pathname } = useLocation();
+    const navigate = useNavigate();
     const { mutate: signOut } = useSignOutAccount();
+
+
+    const handleSignOut = async () => {
+        signOut();
+        await checkAuthUser();
+        navigate('/sign-in');
+    }
+
 
     return (
         <nav className='leftsidebar'>
@@ -39,7 +48,7 @@ const LeftSidebar = () => {
                     })}
                 </ul>
             </div>
-            <button onClick={() => signOut()} className='shad-button_ghost' title='logout'>
+            <button onClick={handleSignOut} className='shad-button_ghost' title='logout'>
                 <img src='/assets/icons/logout.svg' alt='logout' />
                 <p className='small-medium lg:base-medium'>Logout</p>
             </button>
