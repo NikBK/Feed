@@ -1,5 +1,4 @@
-import Loader from "@/components/Loader";
-import PostForm from "@/components/PostForm"
+import { Loader, PostForm } from "@/components";
 import { useGetPostById } from "@/lib/react-query/queriesAndMutations";
 import { useParams } from "react-router-dom"
 

@@ -1,5 +1,4 @@
-import Loader from "@/components/Loader";
-import PostCard from "@/components/PostCard";
+import { Loader, PostCard } from "@/components";
 import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
 import { Models } from "appwrite";
 

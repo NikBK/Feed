@@ -1,4 +1,4 @@
-import GridPostList from '@/components/GridPostList';
+import { GridPostList } from '@/components';
 import { useGetCurrentUser } from '@/lib/react-query/queriesAndMutations';
 import { Models } from 'appwrite';
 

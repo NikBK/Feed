@@ -1,10 +1,8 @@
-import Loader from "@/components/Loader";
-import ProfileUploader from "@/components/ProfileUploader";
-import Toast from "@/components/Toast";
-import { useUserContext } from "@/context/AuthContext";
-import { useGetUserById, useUpdateUser } from "@/lib/react-query/queriesAndMutations";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import { useUserContext } from "@/context/AuthContext";
+import { useGetUserById, useUpdateUser } from "@/lib/react-query/queriesAndMutations";
+import { Loader, ProfileUploader, Toast } from "@/components";
 
 type ProfileFormData = {
     name: string;

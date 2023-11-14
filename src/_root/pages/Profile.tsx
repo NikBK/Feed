@@ -1,8 +1,7 @@
-import GridPostList from "@/components/GridPostList";
-import Loader from "@/components/Loader";
+import { Route, Routes, Link, Outlet, useParams, useLocation } from "react-router-dom";
+import { GridPostList, Loader } from "@/components";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import { Route, Routes, Link, Outlet, useParams, useLocation } from "react-router-dom";
 import LikedPosts from "./LikedPosts";
 
 interface StabBlockProps {

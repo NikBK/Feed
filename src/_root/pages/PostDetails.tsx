@@ -1,5 +1,4 @@
-import Loader from "@/components/Loader";
-import PostStats from "@/components/PostStats";
+import { Loader, PostStats } from "@/components";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetPostById } from "@/lib/react-query/queriesAndMutations"
 import { formatDateString } from "@/lib/utils/utils";

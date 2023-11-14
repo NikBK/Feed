@@ -1,7 +1,5 @@
-import Bottombar from '@/components/Bottombar';
-import LeftSidebar from '@/components/LeftSidebar';
-import Topbar from '@/components/Topbar';
 import { Outlet } from 'react-router-dom';
+import { Bottombar, LeftSidebar, Topbar } from '@/components';
 
 const RootLayout = () => {
     return (

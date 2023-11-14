@@ -1,10 +1,8 @@
-import GridPostList from '@/components/GridPostList';
-import Loader from '@/components/Loader';
-import SearchResults from '@/components/SearchResults';
-import useDebounce from '@/hooks/useDebounce';
-import { useGetPosts, useSearchPosts } from '@/lib/react-query/queriesAndMutations';
 import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useGetPosts, useSearchPosts } from '@/lib/react-query/queriesAndMutations';
+import { GridPostList, Loader, SearchResults } from '@/components';
+import useDebounce from '@/hooks/useDebounce';
 
 const Explore = () => {
     const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();

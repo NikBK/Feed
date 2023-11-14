@@ -1,6 +1,4 @@
-import Loader from '@/components/Loader';
-import Toast from '@/components/Toast';
-import UserCard from '@/components/UserCard';
+import { Loader, Toast, UserCard } from '@/components';
 import { useGetUsers } from '@/lib/react-query/queriesAndMutations';
 
 const AllUsers = () => {
