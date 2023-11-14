@@ -2,12 +2,12 @@ import { sidebarLinks } from '@/constants';
 import { useUserContext } from '@/context/AuthContext';
 import { useSignOutAccount } from '@/lib/react-query/queriesAndMutations';
 import { INavLink } from '@/types';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 
 const LeftSidebar = () => {
-    const { user, checkAuthUser } = useUserContext();
+    const { user } = useUserContext();
     const { pathname } = useLocation();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { mutate: signOut } = useSignOutAccount();
 
 
