@@ -2,7 +2,7 @@ import {
     useQuery,
     useMutation,
     useQueryClient,
-    useInfiniteQuery
+    useInfiniteQuery,
 } from "@tanstack/react-query";
 import { createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getInfinityPosts, getPostById, getRecentPosts, getUserById, getUsers, likePost, savePost, searchPosts, signInAccount, signOutAccount, updatePost, updateUser } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
@@ -149,15 +149,23 @@ export const useDeletePost = () => {
 }
 
 export const useGetPosts = () => {
+    // return useInfiniteQuery<Models.DocumentList<Models.Document> | undefined, Error, InfiniteData<Models.DocumentList<Models.Document> | undefined, unknown>, QUERY_KEYS[], number>({
+
     return useInfiniteQuery({
         queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-        queryFn: getInfinityPosts,
-        getNextPageParam: (lastPage) => {
+        queryFn: getInfinityPosts as any,
+        initialPageParam: 1,
+        getNextPageParam: (lastPage: any) => {
             if (lastPage && lastPage.documents.length === 0) return null;
 
             const lastId = lastPage?.documents[lastPage.documents.length - 1].$id;
 
-            return lastId;
+            // return lastId ? parseInt(lastId) : null;
+            return parseInt(lastId || "0");
+            // return lastId?.toString() || "";
+            // return lastId;
+
+            // return lastId;
         }
     })
 }
