@@ -154,18 +154,18 @@ export const useGetPosts = () => {
     return useInfiniteQuery({
         queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
         queryFn: getInfinityPosts as any,
-        initialPageParam: 1,
+        initialPageParam: "",
         getNextPageParam: (lastPage: any) => {
             if (lastPage && lastPage.documents.length === 0) return null;
 
             const lastId = lastPage?.documents[lastPage.documents.length - 1].$id;
 
             // return lastId ? parseInt(lastId) : null;
-            return parseInt(lastId || "0");
+            // return parseInt(lastId || "0");
             // return lastId?.toString() || "";
             // return lastId;
 
-            // return lastId;
+            return lastId;
         }
     })
 }
