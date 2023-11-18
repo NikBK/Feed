@@ -40,12 +40,12 @@ export const useCreatePost = () => {
     });
 };
 
-export const useGetRecentPosts = () => {
-    return useQuery({
-        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
-        queryFn: getRecentPosts
-    })
-}
+// export const useGetRecentPosts = () => {
+//     return useQuery({
+//         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+//         queryFn: getRecentPosts
+//     })
+// }
 
 export const useLikePost = () => {
     const queryClient = useQueryClient();
@@ -148,9 +148,23 @@ export const useDeletePost = () => {
     })
 }
 
-export const useGetPosts = () => {
-    // return useInfiniteQuery<Models.DocumentList<Models.Document> | undefined, Error, InfiniteData<Models.DocumentList<Models.Document> | undefined, unknown>, QUERY_KEYS[], number>({
+export const useGetRecentPosts = () => {
+    return useInfiniteQuery({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+        queryFn: getRecentPosts as any,
+        initialPageParam: "",
+        getNextPageParam: (lastPage: any) => {
+            if (lastPage && lastPage.documents.length === 0) return null;
 
+            const lastId = lastPage?.documents[lastPage.documents.length - 1].$id;
+
+            return lastId;
+        }
+    })
+
+}
+
+export const useGetPosts = () => {
     return useInfiniteQuery({
         queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
         queryFn: getInfinityPosts as any,
@@ -159,11 +173,6 @@ export const useGetPosts = () => {
             if (lastPage && lastPage.documents.length === 0) return null;
 
             const lastId = lastPage?.documents[lastPage.documents.length - 1].$id;
-
-            // return lastId ? parseInt(lastId) : null;
-            // return parseInt(lastId || "0");
-            // return lastId?.toString() || "";
-            // return lastId;
 
             return lastId;
         }
