@@ -1,27 +1,61 @@
-# React + TypeScript + Vite
+# Feed - Social Media Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+Feed is a social media application where users can connect, share images, and engage with each other. Built with React + Vite, the application leverages AppWrite for backend functionalities, including authentication, storage, file upload, and database management. Tanstack Query is used for efficient data fetching.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+1. **User Authentication:**
+   - Users can sign up and log in using their email accounts.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+2. **Post Creation:**
+   - Create posts with images, captions, locations, and tags.
 
-- Configure the top-level `parserOptions` property like this:
+3. **Home Section:**
+   - View a feed of posts from different users.
+   - Like and save posts directly from the home feed.
+   - Infinite scroll for a seamless browsing experience.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+4. **Saved Posts:**
+   - Access a separate section to view all saved posts.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+5. **Explore Section:**
+   - Search for posts based on keywords or tags.
+   - Infinite scroll for an endless exploration.
+
+6. **Create Post Page:**
+   - Dedicated page for users to easily create and share new posts.
+
+7. **Post Management:**
+   - Users can edit and delete their own posts.
+   - View profiles of other users as well as their own.
+
+## Tech Stack
+
+- **Frontend Tools and Dependencies:**
+  - React
+  - TypeScript
+  - Vite
+  - Tanstack Query
+  - TailwindCSS
+  - React DropZone
+
+- **Backend:**
+  - AppWrite (Authentication, Storage, Database)
+
+## AppWrite Configuration
+
+Ensure that you have AppWrite configured with the necessary credentials and settings for authentication, storage, and database operations. Update the AppWrite configuration in the application accordingly.
+
+## Tanstack Query Integration
+
+Tanstack Query is seamlessly integrated for efficient data fetching. Queries and mutations are defined in the queries file, allowing for a clean and maintainable data management layer.
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues and pull requests to improve the application.
+
+## License
+
+This project is licensed under the MIT License
