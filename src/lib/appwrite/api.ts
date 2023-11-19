@@ -180,7 +180,7 @@ export async function deleteFile(fileId: string) {
 }
 
 export async function getRecentPosts({ pageParam }: { pageParam: string }) {
-    const queries: any[] = [Query.orderDesc('$createdAt'), Query.limit(10)]
+    const queries: any[] = [Query.orderDesc('$createdAt'), Query.limit(5)]
 
     if (pageParam) {
         queries.push(Query.cursorAfter(pageParam.toString()));
@@ -345,7 +345,7 @@ export async function deletePost(postId: string, imageId: string) {
 }
 
 export async function getInfinityPosts({ pageParam }: { pageParam: string }) {
-    const queries: any[] = [Query.orderDesc('$updatedAt'), Query.limit(10)]
+    const queries: any[] = [Query.orderDesc('$updatedAt'), Query.limit(5)]
 
     if (pageParam) {
         queries.push(Query.cursorAfter(pageParam.toString()));

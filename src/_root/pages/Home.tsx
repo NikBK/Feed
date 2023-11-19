@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { Models } from "appwrite";
-import { Loader, PostCard } from "@/components";
+import { Loader, PostCard, PostSkeleton } from "@/components";
 import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
 
 const Home = () => {
@@ -31,7 +31,7 @@ const Home = () => {
             <div className="home-container">
                 <div className="home-posts">
                     <h2 className="h3-bold md:h2-bold text-left w-full">Home Feed</h2>
-                    {isPostLoading && !posts ? <Loader /> : (
+                    {isPostLoading && !posts ? <PostSkeleton /> : (
                         <ul className="flex flex-col flex-1 gap-9 w-full">
                             {/* {posts?.documents.map((post: Models.Document) => (
                                 <PostCard key={post.$id} post={post} />
