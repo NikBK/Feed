@@ -26,7 +26,11 @@ const UserCard = ({ user }: UserCardProps) => {
                 </p>
             </div>
 
-            <button type="button" disabled={currentuser.id === user.$id} className={`shad-button_primary px-5 rounded ${currentuser.id === user.$id ? "cursor-no-drop bg-gray-500 hover:bg-gray-500" : ""}`}>
+            <button
+                type="button"
+                disabled={currentuser.id === user.$id}
+                className={`shad-button_primary px-5 py-1 rounded ${currentuser.id === user.$id ? "cursor-no-drop bg-gray-500 hover:bg-gray-500" : ""}`}
+            >
                 Follow
             </button>
         </Link>

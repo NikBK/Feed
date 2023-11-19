@@ -80,7 +80,7 @@ const Profile = () => {
                             </Link>
                         </div>
                         <div className={`${user.id === id && "hidden"}`}>
-                            <button type="button" className="shad-button_primary px-8">
+                            <button type="button" className="shad-button_primary px-5 py-1 rounded">
                                 Follow
                             </button>
                         </div>
