@@ -4,7 +4,7 @@ import {
     useQueryClient,
     useInfiniteQuery,
 } from "@tanstack/react-query";
-import { createPost, createUserAccount, deletePost, deleteSavedPost, followUser, getCurrentUser, getInfinityPosts, getPostById, getRecentPosts, getUserById, getUsers, likePost, savePost, searchPosts, signInAccount, signOutAccount, unfollowUser, updatePost, updateUser } from "../appwrite/api";
+import { createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getInfinityPosts, getPostById, getRecentPosts, getUserById, getUsers, handleFollowingUser, likePost, savePost, searchPosts, signInAccount, signOutAccount, updatePost, updateUser } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
 
@@ -218,14 +218,8 @@ export const useUpdateUser = () => {
     });
 };
 
-export const useFollowUser = () => {
+export const useFollowingUser = () => {
     return useMutation({
-        mutationFn: ({ userId, targetUserId }: { userId: string, targetUserId: string }) => followUser(userId, targetUserId)
-    })
-}
-
-export const useUnfollowUser = () => {
-    return useMutation({
-        mutationFn: ({ userId, targetUserId }: { userId: string, targetUserId: string }) => unfollowUser(userId, targetUserId)
+        mutationFn: ({ userId, followUserArray }: { userId: string, followUserArray: string[] }) => handleFollowingUser(userId, followUserArray)
     })
 }

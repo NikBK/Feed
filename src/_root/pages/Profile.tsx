@@ -1,7 +1,7 @@
 import { Route, Routes, Link, Outlet, useParams, useLocation } from "react-router-dom";
 import { GridPostList, Loader } from "@/components";
 import { useUserContext } from "@/context/AuthContext";
-import { useFollowUser, useGetCurrentUser, useGetUserById, useUnfollowUser } from "@/lib/react-query/queriesAndMutations";
+import { useFollowingUser, useGetCurrentUser, useGetUserById } from "@/lib/react-query/queriesAndMutations";
 import LikedPosts from "./LikedPosts";
 import { useState } from "react";
 
@@ -24,24 +24,24 @@ const Profile = () => {
 
     const { data: currentUser } = useGetUserById(id || "");
     const { data: loggedInUser } = useGetCurrentUser();
-    const { mutateAsync: followUser, isPending: isFollowingUser } = useFollowUser();
-    const { mutateAsync: unfollowUser, isPending: isUnfollowingUser } = useUnfollowUser();
+    const { mutateAsync: handleFollowingUser, isPending: isFollowingUser } = useFollowingUser();
 
-    const [followingUser, setFollowinguser] = useState(loggedInUser?.followings.includes(id) || false);
-    // const [logedInUserFollowings, setLoggedInUserFollowings] = useState(loggedInUser?.followings || []);
+    const [logedInUserFollowings, setLoggedInUserFollowings] = useState(loggedInUser?.followings || []);
+    const [followingUser, setFollowinguser] = useState(logedInUserFollowings.includes(id) || false);
 
     const handleFollow = async () => {
 
         if (currentUser) {
-            console.log(loggedInUser?.followings);
+            var updatedFollowings = [];
             if (!followingUser) {
-                await followUser({ userId: user.id, targetUserId: currentUser.$id });
-                setFollowinguser(true);
+                updatedFollowings = [...logedInUserFollowings, currentUser.$id];
             }
             else {
-                await unfollowUser({ userId: user.id, targetUserId: currentUser.$id });
-                setFollowinguser(false);
+                updatedFollowings = logedInUserFollowings.filter((UID: string) => UID !== currentUser?.$id);
             }
+            await handleFollowingUser({ userId: user.id, followUserArray: updatedFollowings });
+            setLoggedInUserFollowings(updatedFollowings)
+            setFollowinguser((prev: boolean) => !prev);
         }
     }
 
@@ -104,11 +104,11 @@ const Profile = () => {
                         <div className={`${user.id === id && "hidden"}`}>
                             <button
                                 onClick={handleFollow}
-                                disabled={isFollowingUser || isUnfollowingUser}
+                                disabled={isFollowingUser}
                                 type="button"
                                 className="shad-button_primary px-5 py-1 rounded"
                             >
-                                {isFollowingUser || isUnfollowingUser ? <Loader /> : <></>}
+                                {isFollowingUser && <Loader />}
                                 {followingUser ? "Following" : "Follow"}
                             </button>
                         </div>
