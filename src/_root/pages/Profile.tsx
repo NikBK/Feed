@@ -1,8 +1,9 @@
 import { Route, Routes, Link, Outlet, useParams, useLocation } from "react-router-dom";
 import { GridPostList, Loader } from "@/components";
 import { useUserContext } from "@/context/AuthContext";
-import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
+import { useFollowUser, useGetCurrentUser, useGetUserById, useUnfollowUser } from "@/lib/react-query/queriesAndMutations";
 import LikedPosts from "./LikedPosts";
+import { useState } from "react";
 
 interface StabBlockProps {
     value: string | number;
@@ -22,6 +23,27 @@ const Profile = () => {
     const { pathname } = useLocation();
 
     const { data: currentUser } = useGetUserById(id || "");
+    const { data: loggedInUser } = useGetCurrentUser();
+    const { mutateAsync: followUser, isPending: isFollowingUser } = useFollowUser();
+    const { mutateAsync: unfollowUser, isPending: isUnfollowingUser } = useUnfollowUser();
+
+    const [followingUser, setFollowinguser] = useState(loggedInUser?.followings.includes(id) || false);
+    // const [logedInUserFollowings, setLoggedInUserFollowings] = useState(loggedInUser?.followings || []);
+
+    const handleFollow = async () => {
+
+        if (currentUser) {
+            console.log(loggedInUser?.followings);
+            if (!followingUser) {
+                await followUser({ userId: user.id, targetUserId: currentUser.$id });
+                setFollowinguser(true);
+            }
+            else {
+                await unfollowUser({ userId: user.id, targetUserId: currentUser.$id });
+                setFollowinguser(false);
+            }
+        }
+    }
 
     if (!currentUser)
         return (
@@ -53,8 +75,8 @@ const Profile = () => {
 
                         <div className="flex gap-8 mt-10 items-center justify-center xl:justify-start flex-wrap z-20">
                             <StatBlock value={currentUser.posts.length} label="Posts" />
-                            <StatBlock value={25} label="Followers" />
-                            <StatBlock value={20} label="Following" />
+                            {/* <StatBlock value={25} label="Followers" /> */}
+                            <StatBlock value={currentUser.followings.length} label="Following" />
                         </div>
 
                         <p className="small-medium md:base-medium text-center xl:text-left mt-7 max-w-screen-sm">
@@ -80,8 +102,14 @@ const Profile = () => {
                             </Link>
                         </div>
                         <div className={`${user.id === id && "hidden"}`}>
-                            <button type="button" className="shad-button_primary px-5 py-1 rounded">
-                                Follow
+                            <button
+                                onClick={handleFollow}
+                                disabled={isFollowingUser || isUnfollowingUser}
+                                type="button"
+                                className="shad-button_primary px-5 py-1 rounded"
+                            >
+                                {isFollowingUser || isUnfollowingUser ? <Loader /> : <></>}
+                                {followingUser ? "Following" : "Follow"}
                             </button>
                         </div>
                     </div>

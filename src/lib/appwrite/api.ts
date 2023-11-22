@@ -476,3 +476,57 @@ export async function updateUser(user: IUpdateUser) {
         console.log(error);
     }
 }
+
+export async function followUser(userId: string, targetUserId: string) {
+    try {
+        const user = await databases.getDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.usersCollectionId,
+            userId
+        );
+
+        if (!user) throw Error;
+
+        user.followings.push(targetUserId);
+
+        const updatedUser = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.usersCollectionId,
+            userId,
+            { followings: user.followings }
+        )
+
+        if (!updatedUser) throw Error;
+
+        return updatedUser;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function unfollowUser(userId: string, targetUserId: string) {
+    try {
+        const user = await databases.getDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.usersCollectionId,
+            userId
+        );
+
+        if (!user) throw Error;
+
+        const updatedFollowings = user.followings.filter((UID: String) => UID !== targetUserId);
+
+        const updatedUser = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.usersCollectionId,
+            userId,
+            { followings: updatedFollowings }
+        )
+
+        if (!updatedUser) throw Error;
+
+        return updatedUser;
+    } catch (error) {
+        console.log(error);
+    }
+}
