@@ -1,13 +1,39 @@
-import { useUserContext } from "@/context/AuthContext";
 import { Models } from "appwrite";
 import { Link } from "react-router-dom";
+import { Loader } from ".";
+import { MouseEvent, useState } from "react";
+import { useFollowingUser } from "@/lib/react-query/queriesAndMutations";
+import { useUserContext } from "@/context/AuthContext";
 
 type UserCardProps = {
     user: Models.Document;
+    loggedInUserFollowings: string[];
+    setLoggedInUserFollowings: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-const UserCard = ({ user }: UserCardProps) => {
-    const { user: currentuser } = useUserContext();
+const UserCard = ({ user, loggedInUserFollowings, setLoggedInUserFollowings }: UserCardProps) => {
+    const { user: currentUser } = useUserContext();
+
+    const { mutateAsync: handleFollowingUser, isPending: isFollowingUser } = useFollowingUser();
+    const [followingUser, setFollowinguser] = useState(loggedInUserFollowings.includes(user.$id));
+
+
+    const handleFollow = async (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+
+        if (currentUser) {
+            var updatedFollowings = [];
+            if (!followingUser) {
+                updatedFollowings = [...loggedInUserFollowings, user.$id];
+            }
+            else {
+                updatedFollowings = loggedInUserFollowings.filter((UID: string) => UID !== user.$id);
+            }
+            await handleFollowingUser({ userId: currentUser.id, followUserArray: updatedFollowings });
+            setLoggedInUserFollowings(updatedFollowings)
+            setFollowinguser((prev: boolean) => !prev);
+        }
+    }
 
     return (
         <Link to={`/profile/${user.$id}`} className="user-card">
@@ -27,11 +53,13 @@ const UserCard = ({ user }: UserCardProps) => {
             </div>
 
             <button
+                onClick={handleFollow}
                 type="button"
-                disabled={currentuser.id === user.$id}
-                className={`shad-button_primary px-5 py-1 rounded ${currentuser.id === user.$id ? "cursor-no-drop bg-gray-500 hover:bg-gray-500" : ""}`}
+                disabled={(currentUser?.id === user.$id) || isFollowingUser}
+                className={`shad-button_primary px-5 py-1 rounded ${currentUser?.id === user.$id ? "cursor-no-drop bg-gray-500 hover:bg-gray-500" : ""}`}
             >
-                Follow
+                {isFollowingUser && <Loader />}
+                {followingUser ? "Following" : "Follow"}
             </button>
         </Link>
     );

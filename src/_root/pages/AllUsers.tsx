@@ -1,8 +1,17 @@
+import { useState, useEffect } from "react";
 import { Loader, Toast, UserCard } from '@/components';
-import { useGetUsers } from '@/lib/react-query/queriesAndMutations';
+import { useGetCurrentUser, useGetUsers } from '@/lib/react-query/queriesAndMutations';
 
 const AllUsers = () => {
     const { data: creators, isLoading, isError: isErrorCreators } = useGetUsers();
+
+    const { data: loggedInUser } = useGetCurrentUser();
+    const [loggedInUserFollowings, setLoggedInUserFollowings] = useState(loggedInUser?.followings || []);
+
+    useEffect(() => {
+        setLoggedInUserFollowings(loggedInUser?.followings);
+    }, [loggedInUser])
+
 
     if (isErrorCreators) {
         return <Toast title="Something went wrong." type='error' />
@@ -18,7 +27,7 @@ const AllUsers = () => {
                     <ul className="user-grid">
                         {creators?.documents.map((creator) => (
                             <li key={creator?.$id} className="flex-1 min-w-[200px] w-full  ">
-                                <UserCard user={creator} />
+                                <UserCard user={creator} loggedInUserFollowings={loggedInUserFollowings} setLoggedInUserFollowings={setLoggedInUserFollowings} />
                             </li>
                         ))}
                     </ul>
